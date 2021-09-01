@@ -1,25 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Header from "./components/header";
+import Main from "./components/Main";
+import Footer from "./components/footer";
+import hornsData from "./components/hornsdata.json";
+import SelectedBeast from "./components/Selectedbeast";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+      title: "",
+      imageUrl: "",
+      description: "",
+    };
+  }
+
+  handleshow = () => {
+    this.setState({
+      show: true,
+    });
+  };
+
+  handleClose = () => {
+    this.setState({
+      show: false,
+    });
+  };
+
+  updateData = (title, imageUrl, description) => {
+    this.setState({
+      title: title,
+      imageUrl: imageUrl,
+      description: description,
+    });
+  };
+
+  render() {
+    return (
+      <>
+        <Header />
+        <Main
+          hornsData={hornsData}
+          handleshow={this.handleshow}
+          updateData={this.updateData}
+        />
+        <SelectedBeast
+          show={this.state.show}
+          handleClose={this.handleClose}
+          title={this.state.title}
+          imageUrl={this.state.imageUrl}
+          description={this.state.description}
+        />
+        <Footer />
+      </>
+    );
+  }
 }
 
 export default App;
